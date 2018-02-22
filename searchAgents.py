@@ -288,21 +288,32 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+	self._visited, self._visitedlist = {}, []
+    	corner_state = [0, 0, 0, 0]
+    	# check if start position is in any corner
+    	if self.startingPosition in self.corners:
+      		idx = self.corners.index(self.startingPosition)
+      		corner_state[idx] = 1
+	self.startState = (self.startingPosition, tuple(corner_state))
 
     def getStartState(self):
         """
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+	#
+        # *** HERE'S OUR CODE ***"
+	return self.startState
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+	#        
+	# *** HERE'S OUR CODE ***"
+	# since state with (1 1 1 1) is the Goal 
+	isGoal = not(0 in state[1])
+	return isGoal
 
     def getSuccessors(self, state):
         """
@@ -324,7 +335,20 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
+	    #
+            # *** HERE'S OUR CODE ***
+	    x,y = state[0]
+      	    dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+ 
+            if not hitsWall:
+            	from copy import deepcopy
+		visited = list(deepcopy(state[1]))
+            	if (nextx, nexty) in self.corners:		     # It just checks if the corner was already visited or not.
+            		index = self.corners.index((nextx, nexty))   # There are 4 corners, so this condition must be satisfied for 4 times.
+            		visited[index] = 1
+	    	successors.append((((nextx, nexty), tuple(visited)), action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
         return successors

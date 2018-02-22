@@ -29,15 +29,13 @@ def fringeSearching(problem, fringe, heuristic=None):
             visited.append(node)
             if problem.isGoalState(node):
                 return actions
-            successors = problem.getSuccessors(node) 	#[location,direction,cost]
-            for successor in successors:
-                newActions = actions + [successor[1]]
+            for successor in problem.getSuccessors(node): 	#[location,direction,cost]
                 if isinstance(fringe, util.PriorityQueue):
-                    newCost = problem.getCostOfActions(newActions) + \
+                    newCost = problem.getCostOfActions(actions + [successor[1]]) + \
                                heuristic(successor[0], problem)
-                    fringe.push((successor[0], newActions), newCost) 
+                    fringe.push((successor[0], actions + [successor[1]]), newCost) 
 		else: 
-                    fringe.push((successor[0], newActions))                 
+                    fringe.push((successor[0], actions + [successor[1]]))                 
     return []
 
 

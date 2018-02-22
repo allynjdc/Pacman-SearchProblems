@@ -94,20 +94,18 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-    
-    #*** HERE'S OUR CODE ***
+    #
+    # *** HERE'S OUR CODE ***
     # Use the fringeSearching method, with the fringe maintained using a Stack
     # so that the search proceeds in the order of exploring from the node last
     # discovered
     return fringeSearching(problem, util.Stack())
 
-    "util.raiseNotDefined()"
-
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    
-    #*** HERE'S OUR CODE ***
-    # Use the fringeSearching method, with the fringe maintained using a Stack
+    #
+    # *** HERE'S OUR CODE ***
+    # Use the fringeSearching method, with the fringe maintained using a Queue
     # so that the search proceeds in the order of exploring from the node last
     # discovered
     return fringeSearching(problem, util.Queue())
@@ -128,8 +126,8 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    
-    #*** HERE'S OUR CODE ***"
+    #
+    # *** HERE'S OUR CODE ***"
     # Use the fringeSearching method, with the fringe maintained with a 
     # PriorityQueue. The cost is calculated using the provided heuristic. 
     # If no heuristic is given (such as UCS), then default to the given
