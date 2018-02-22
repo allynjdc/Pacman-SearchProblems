@@ -40,6 +40,10 @@ from game import Actions
 import util
 import time
 import search
+#
+# used the file extra to use the functions we made.
+#
+from extra import *
 
 class GoWestAgent(Agent):
     "An agent that goes West until it can't."
@@ -287,14 +291,32 @@ class CornersProblem(search.SearchProblem):
         self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
         # Please add any code here which you would like to use
         # in initializing the problem
-        "*** YOUR CODE HERE ***"
+	
+	#
+	# *** HERE'S OUR CODE ***
+	# The use of the list visited_corners is just a flag in order to check whether
+	# we already achieved our goal (which is to visit all the corners on the maze)
+	# or not yet. We have only 4 elements in the list; the 1st element is the flag
+	# for the corner (left,bottom), 2nd one is the flag for (left, top), the 3rd 
+	# element is for the (right, bottom), and lastly the 4th element is for 
+	# (right, top). Default value of each element is 0, which means FALSE.
+	# PS: Lincy, paki check sng grammar ko. OMG MY PAMILEE. PLES. HAHAHA
 	self._visited, self._visitedlist = {}, []
-    	corner_state = [0, 0, 0, 0]
-    	# check if start position is in any corner
+    	visited_corners = [0, 0, 0, 0]
+	#    	
+	# this condition below is to check if start position / node is in any corner,
+	# then it will update the visited_corners list by changing the 0 (false)
+	# value into 1 (true) by searching the location of the start prosition in 
+	# the tuple self.corners, will get the index of the start position / corner 
+	# from the tuple and use it to use as index in the visited_corners list.
     	if self.startingPosition in self.corners:
       		idx = self.corners.index(self.startingPosition)
-      		corner_state[idx] = 1
-	self.startState = (self.startingPosition, tuple(corner_state))
+      		visited_corners[idx] = 1
+	#
+	# We'll simply assign the value of self.startState to a tuple; which has
+	# the first element is the location / position (x,y), the second element
+	# is the converted tuple of the visited_corners list.
+	self.startState = (self.startingPosition, tuple(visited_corners))
 
     def getStartState(self):
         """
@@ -302,7 +324,10 @@ class CornersProblem(search.SearchProblem):
         space)
         """
 	#
-        # *** HERE'S OUR CODE ***"
+        # *** HERE'S OUR CODE ***
+	# It will just simply return the value of self.startState which is a 
+	# tuple with the position (x,y) of the Start node and a converted tuple
+	# of visited_corners list.
 	return self.startState
 
     def isGoalState(self, state):
@@ -310,10 +335,12 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
 	#        
-	# *** HERE'S OUR CODE ***"
-	# since state with (1 1 1 1) is the Goal 
-	isGoal = not(0 in state[1])
-	return isGoal
+	# *** HERE'S OUR CODE ***
+	# The goal is reach if the visited_corners is equivalent to (1,1,1,1).
+	# The value of state[1] is a converted tuple of visited_corners list.
+	# We'll just simply return a boolean, will check if the value of 
+	# state[1] is (1,1,1,1).
+	return not(0 in state[1])
 
     def getSuccessors(self, state):
         """
@@ -337,17 +364,26 @@ class CornersProblem(search.SearchProblem):
 
 	    #
             # *** HERE'S OUR CODE ***
+	    # The value of state[0] is the position of the current node.
 	    x,y = state[0]
       	    dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             hitsWall = self.walls[nextx][nexty]
- 
+ 	    #
+	    # This condition will only satisfy if pacman will not hit the wall. 
             if not hitsWall:
-		visited = list(state[1])
-            	if (nextx, nexty) in self.corners:		     # It just checks if the corner was already visited or not.
-            		index = self.corners.index((nextx, nexty))   # There are 4 corners, so this condition must be satisfied for 4 times.
-            		visited[index] = 1
-	    	successors.append((((nextx, nexty), tuple(visited)), action, 1))
+		visited_corners = list(state[1])
+		#
+		# Just checks if the next node is a corner.
+		# If the next node is a corner, then we'll get the index of the
+		# next node's position (x,y) from the tuple self.corners and will
+		# update the visited_corners list from 0 (FALSE) into 1 (TRUE).  
+            	if (nextx, nexty) in self.corners: 		     
+            		index = self.corners.index((nextx, nexty))   
+            		visited_corners[index] = 1
+		#
+		# We'll append the next node to the successors list. 
+	    	successors.append((((nextx, nexty), tuple(visited_corners)), action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
@@ -382,9 +418,28 @@ def cornersHeuristic(state, problem):
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
-    "*** YOUR CODE HERE ***"
+    # *** YOUR CODE HERE ***
+    # use heuristic of sub problem, the 3 sub manhattanHeuristic
+    position = state[0]
+    visited_corners = list(state[1])
 
-    return 0 # Default to trivial solution
+    if problem.isGoalState(state):
+    	return 0
+
+    unvisited_corners = []
+    for index in range(len(corners)):
+    	if visited_corners[index] == 0:
+      		unvisited_corners.append(corners[index])
+
+    cur_position = position
+    cost = 0
+    while len(unvisited_corners) != 0:
+	index, distance = findingDistance(cur_position, unvisited_corners)
+	cost += distance
+	cur_position = unvisited_corners[index]
+	unvisited_corners.remove(unvisited_corners[index])
+    return cost
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
@@ -477,8 +532,21 @@ def foodHeuristic(state, problem):
     problem.heuristicInfo['wallCount']
     """
     position, foodGrid = state
-    "*** YOUR CODE HERE ***"
+
+    #
+    # *** HERE'S OUR CODE ***
+    try:
+	#
+	# THIS WILL TOOK SO MUCH TIME. URRGHHH!
+	# PS: LINCY, BE A BDO PLES. AHUAHUAHU
+	#
+	return max(tuple(map(lambda x: mazeDistance(position, x, problem.startingGameState), foodGrid.asList())))
+
+    except Exception as e:
+	return 0
     return 0
+
+    
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
@@ -508,8 +576,17 @@ class ClosestDotSearchAgent(SearchAgent):
         walls = gameState.getWalls()
         problem = AnyFoodSearchProblem(gameState)
 
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+	#
+        # *** HERE'S OUR CODE ***
+	# Honestly, we tried a trial and error to all the search algorithm
+	# available to search.py. We found out that BFS is the best for 
+	# finding the closest food since it will expand the shallowest node
+	# first. We tried the DFS, then it return a Path Cost of 5324. While
+	# the BFS returned a Path Cost of only 350, as well as the UCS and A*
+	# (A* and UCS has the same Path Cost of 350 since this problem hasn't
+	# heuristic - therefore it uses nullHeuristic.)
+	# PS: Lincy, check mah grammar bibi gerl. hahaha
+	return search.uniformCostSearch(problem)
 
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
@@ -544,8 +621,11 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         """
         x,y = state
 
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+	#
+        # *** HERE'S OUR CODE ***
+	# This will only return a boolean, if the current position is also the 
+	# food's location.
+	return (x, y) in self.food.asList()
 
 def mazeDistance(point1, point2, gameState):
     """

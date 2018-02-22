@@ -18,14 +18,10 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
+#
+# used the file extra to use the functions we made.
+#
 from extra import *
-"""
---------------------------------
-
-used the file extra to use the functions we made.
-
---------------------------------
-"""
 
 class SearchProblem:
     """
@@ -96,26 +92,31 @@ def depthFirstSearch(problem):
     """
     #
     # *** HERE'S OUR CODE ***
-    # Use the fringeSearching method, with the fringe maintained using a Stack
-    # so that the search proceeds in the order of exploring from the node last
-    # discovered
+    # We will be using the fringeSearching method from extra.py, with the fringe
+    # is equivalent to Stack so that the search will expand the deepest node first.
     return fringeSearching(problem, util.Stack())
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     #
     # *** HERE'S OUR CODE ***
-    # Use the fringeSearching method, with the fringe maintained using a Queue
-    # so that the search proceeds in the order of exploring from the node last
-    # discovered
+    # This will again use the genericSearch method from extra.py, the fringe
+    # this time is a Queue so that all the shallowest nodes are explored first
+    # Optimal solution will be found, since each level is explored before the
+    # next lower level, so the first time the goal is reached will be the
+    # shortest path to the goal.
     return fringeSearching(problem, util.Queue())
 
     "util.raiseNotDefined()"
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    #
+    # *** HERE'S OUR CODE ***
+    # Since UCS is the similar to A* Search in terms of fringe which is a 
+    # Priority Queue but with no Heuristic, so we'll just call the aStarSearch 
+    # with default Heuristic which is nullHeuristic.
+    return aStarSearch(problem)
 
 def nullHeuristic(state, problem=None):
     """
@@ -127,11 +128,10 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     #
-    # *** HERE'S OUR CODE ***"
-    # Use the fringeSearching method, with the fringe maintained with a 
-    # PriorityQueue. The cost is calculated using the provided heuristic. 
-    # If no heuristic is given (such as UCS), then default to the given
-    # nullHeuristic
+    # *** HERE'S OUR CODE ***
+    # We'll use the fringeSearching method again which is at the extra.py, 
+    # with the fringe maintained with a PriorityQueue. The cost is calculated 
+    # using the provided heuristic. Having no heuristic is similar to UCS.
     return fringeSearching(problem, util.PriorityQueue(), heuristic)
 
 
