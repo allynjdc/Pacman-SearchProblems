@@ -343,8 +343,7 @@ class CornersProblem(search.SearchProblem):
             hitsWall = self.walls[nextx][nexty]
  
             if not hitsWall:
-            	from copy import deepcopy
-		visited = list(deepcopy(state[1]))
+		visited = list(state[1])
             	if (nextx, nexty) in self.corners:		     # It just checks if the corner was already visited or not.
             		index = self.corners.index((nextx, nexty))   # There are 4 corners, so this condition must be satisfied for 4 times.
             		visited[index] = 1
@@ -384,6 +383,7 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
+
     return 0 # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
