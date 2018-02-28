@@ -46,6 +46,7 @@ def fringeSearching(problem, fringe, heuristic=None):
         if not node in visited:
             visited.append(node)
             if problem.isGoalState(node):
+		#print actions
                 return actions
             for successor in problem.getSuccessors(node): 	#[location,direction,cost]
                 if isinstance(fringe, util.PriorityQueue):
