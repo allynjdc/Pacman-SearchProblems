@@ -420,6 +420,9 @@ def cornersHeuristic(state, problem):
 
     # *** YOUR CODE HERE ***
     # use heuristic of sub problem, the 3 sub manhattanHeuristic
+	
+    #
+    # THIS IS Q6, LINCY.
     position = state[0]
     visited_corners = list(state[1])
 
@@ -535,6 +538,8 @@ def foodHeuristic(state, problem):
 
     #
     # *** HERE'S OUR CODE ***
+    #  
+    # THIS IS Q7, LINCY.
     try:
 	#
 	# THIS WILL TOOK SO MUCH TIME. URRGHHH!
