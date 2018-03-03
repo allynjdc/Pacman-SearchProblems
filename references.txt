@@ -1,13 +1,21 @@
 REFERENCES
 
-1. https://github.com/dmurtari/Pacman
+1. Lecture Slides
 2. https://github.com/weixsong/pacman
 3. https://www.tutorialspoint.com/python/python_tuples.htm
 4. http://python-reference.readthedocs.io/en/latest/docs/functions/isinstance.html
-5. https://gitlab.com/msdocs/pacman/blob/master/searchAgents.py
+5. https://gitlab.com/msdocs/pacman
 6. http://www.physics.nyu.edu/pine/pymanual/html/chap3/chap3_arrays.html
-7. 
-
+7. http://www.secnetix.de/olli/Python/lambda_functions.hawk
+8. https://www.python-course.eu/lambda.php
+9. http://www.bogotobogo.com/python/python_fncs_map_filter_reduce.php
+10. https://www.youtube.com/watch?feature=player_embedded&v=afwPe_OqPX0
+11. https://www.youtube.com/watch?feature=player_embedded&v=OGcG4jSKOVA
+12. http://ai.berkeley.edu/lecture_slides.html
+13. https://www.tutorialspoint.com/data_structures_algorithms/stack_algorithm.htm
+14. https://www.tutorialspoint.com/data_structures_algorithms/dsa_queue.htm
+15. https://www.tutorialspoint.com/data_structures_algorithms/priority_queue
+ 
 
 Our own Repository:
-https://github.com/allynjdc/Pacman-SearchProblems
+ > https://github.com/allynjdc/Pacman-SearchProblems

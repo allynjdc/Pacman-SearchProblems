@@ -107,7 +107,7 @@ def breadthFirstSearch(problem):
     # shortest path to the goal.
     return fringeSearching(problem, util.Queue())
 
-    "util.raiseNotDefined()"
+    "util.raiseNotDefined()" 
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""

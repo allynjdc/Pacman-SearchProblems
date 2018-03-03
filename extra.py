@@ -5,7 +5,7 @@ import search
 #
 # 1st METHOD
 # will be used in search.py (Q1, Q2, & Q4)
-#
+# 
 def fringeSearching(problem, fringe, heuristic=None):
     # fringe Searching algorithm that takes a problem and a queuing strategy
     # and performs a search given that strategy

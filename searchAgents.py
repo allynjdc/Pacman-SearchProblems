@@ -430,7 +430,7 @@ def cornersHeuristic(state, problem):
 
     # Gets the index of the corners and put them in the unvisited_corners tuple
     # afterwards the get the position of Pacman
-    # While Pacman hasn't arrived in all the corners, find the distance
+    # While Pacman hasn't arrived in all the corners, find the distance 
     # of Pacman from the food which are found in the corners.
     # We used util.manhattanDistance from extra.py to do that.
     # Pacman will choose to go to the corner with the least cost.
