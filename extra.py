@@ -57,6 +57,7 @@ def fringeSearching(problem, fringe, heuristic=None):
                     fringe.push((successor[0], actions + [successor[1]]))                 
     return []
 
+
 #
 # 2nd METHOD
 # will be used in searchAgents.py (Q8)
@@ -64,8 +65,12 @@ def fringeSearching(problem, fringe, heuristic=None):
 def findingDistance(position, foods):
     index = 0
     final_dist = None
+    # Finds the distance between the current location of Pacman and
+    # the food which are found in the corners of the maze.
+    # We'll check the distance of every food from in the foodlist, 
     for i in range(len(foods)):
     	distance = util.manhattanDistance(position, foods[i])
+	# it will return the index and also the distance of the minimum distance generated from the loop. 
     	if final_dist == None or final_dist > distance:
       	    final_dist = distance
       	    index = i

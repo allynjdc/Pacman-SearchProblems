@@ -418,17 +418,26 @@ def cornersHeuristic(state, problem):
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
-    # *** YOUR CODE HERE ***
-    # use heuristic of sub problem, the 3 sub manhattanHeuristic
-	
     #
-    # THIS IS Q6, LINCY.
+    # *** HERE'S OUR CODE ***	
+    # Initializes the position of Pacman inside the maze
     position = state[0]
     visited_corners = list(state[1])
 
+    # Checks if state is a valid goal state
     if problem.isGoalState(state):
     	return 0
 
+    # Gets the index of the corners and put them in the unvisited_corners tuple
+    # afterwards the get the position of Pacman
+    # While Pacman hasn't arrived in all the corners, find the distance
+    # of Pacman from the food which are found in the corners.
+    # We used util.manhattanDistance from extra.py to do that.
+    # Pacman will choose to go to the corner with the least cost.
+    # The cost will increase in value according to the distance Pacman
+    # traveled to a corner.
+    # Pacman will travel to that corner and once the corner has been visited,
+    # it will remove the index of that corner from unvisited_corners tuple
     unvisited_corners = []
     for index in range(len(corners)):
     	if visited_corners[index] == 0:
@@ -437,6 +446,7 @@ def cornersHeuristic(state, problem):
     cur_position = position
     cost = 0
     while len(unvisited_corners) != 0:
+	#FindingDistance() is found in extra.py
 	index, distance = findingDistance(cur_position, unvisited_corners)
 	cost += distance
 	cur_position = unvisited_corners[index]
@@ -539,17 +549,20 @@ def foodHeuristic(state, problem):
     #
     # *** HERE'S OUR CODE ***
     #  
-    # THIS IS Q7, LINCY.
-    try:
-	#
-	# THIS WILL TOOK SO MUCH TIME. URRGHHH!
-	# PS: LINCY, BE A BDO PLES. AHUAHUAHU
-	#
-	return max(tuple(map(lambda x: mazeDistance(position, x, problem.startingGameState), foodGrid.asList())))
+    # This will take tooooooooo loooong.
+    try: 
+
+    # Calculates the distance of Pacman to each dot in from the foodGrid.asList()
+    # the map function enables the mazeDistance function to execute per dot.
+    # This is the reason why it would take time befor Pacman would move
+    # since it has to consider every path and determine which one to take.
+        path_to_dot = map(lambda x: mazeDistance(position, x, problem.startingGameState), foodGrid.asList())
+    # Returns the maximum value of the list
+        max_path = max(path_to_dot)
+        return max_path
 
     except Exception as e:
-	return 0
-    return 0
+    	return 0
 
     
 
